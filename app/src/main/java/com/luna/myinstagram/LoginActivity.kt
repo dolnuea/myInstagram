@@ -44,11 +44,10 @@ class LoginActivity : AppCompatActivity() {
         user.signUpInBackground { e ->
             if (e == null) {
                 //user succesfully created new acc
-
-                //todo navigate user to main activity
-                //todo or show a toast to indicated signed up for acc
+                goToMainActivity()
+                Toast.makeText(this, "Successfully signed up", LENGTH_SHORT).show()
             } else {
-                //todo show toast to indicate error signing up
+                Toast.makeText(this, "Error signing up", LENGTH_SHORT).show()
                 e.printStackTrace()
             }
         }

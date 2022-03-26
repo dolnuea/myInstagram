@@ -51,6 +51,14 @@ class MainActivity : AppCompatActivity() {
             onLaunchCamera()
         }
 
+        findViewById<Button>(R.id.logoutButton).setOnClickListener {
+            ParseUser.logOut()
+            val currentUser = ParseUser.getCurrentUser() // this will now be null
+            val intent = Intent(this@MainActivity,  LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         //queryPosts()
     }
 
