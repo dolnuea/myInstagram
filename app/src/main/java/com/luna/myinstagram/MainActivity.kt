@@ -17,13 +17,12 @@ import androidx.core.content.FileProvider
 import com.parse.*
 import java.io.File
 
-// let user create a post by taking a photo with their camera
-// 9:41 https://www.youtube.com/watch?v=NgKsIJuVEuQ&list=PLrT2tZ9JRrf4EVXhKeIGsNznHsznmWjlv&index=5
 class MainActivity : AppCompatActivity() {
 
     val CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034
     val photoFileName = "photo.jpg"
     var photoFile: File? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +41,8 @@ class MainActivity : AppCompatActivity() {
             if (photoFile != null) {
                 submitPost(description, user, photoFile!!)
             } else {
-                //todo show print error
+                Log.e(TAG, "Error submitting post")
+                Toast.makeText(this@MainActivity, "Error submitting post", LENGTH_SHORT).show()
             }
 
         }
@@ -69,8 +69,9 @@ class MainActivity : AppCompatActivity() {
             }
             else {
                 Log.i(TAG, "Successfully submitted the post")
-                //todo reset description
-                //todo reset imageview to empty image
+                Toast.makeText(this,"Successfully submitted the post", LENGTH_SHORT ).show()
+                findViewById<EditText>(R.id.etDescription).setText("")
+                findViewById<ImageView>(R.id.ivPostImage).setImageDrawable(null)
             }
         }
     }
