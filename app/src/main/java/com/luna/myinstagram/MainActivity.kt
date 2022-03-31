@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.core.content.FileProvider
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.parse.*
 import java.io.File
 
@@ -57,6 +58,25 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity,  LoginActivity::class.java)
             startActivity(intent)
             finish()
+        }
+
+        findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemSelectedListener {
+            item ->
+            when(item.itemId) {
+                R.id.action_home -> {
+                    //todo navigate to home screen
+                    Toast.makeText(this, "Home", LENGTH_SHORT).show()
+                }
+                R.id.action_profile -> {
+                    //todo navigate to profile screen
+                    Toast.makeText(this, "Profile", LENGTH_SHORT).show()
+                }
+                R.id.action_compose -> {
+                    //todo navigate to compose screen
+                    Toast.makeText(this, "Compose", LENGTH_SHORT).show()
+                }
+            }
+            true
         }
 
         //queryPosts()
