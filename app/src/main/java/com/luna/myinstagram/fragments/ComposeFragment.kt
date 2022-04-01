@@ -34,7 +34,6 @@ class ComposeFragment : Fragment() {
     lateinit var ivPreview : ImageView
     lateinit var etDescription: EditText
 
-    //14:16 https://www.youtube.com/watch?v=faz36klVlSA&list=PLrT2tZ9JRrf78outkOAaL3IPGQNljAXsI&index=3
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
