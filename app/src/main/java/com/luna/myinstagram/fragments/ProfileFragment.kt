@@ -10,6 +10,10 @@ import com.parse.ParseUser
 class ProfileFragment: FeedFragment() {
 
     override fun queryPosts() {
+        // SwipeRefresh: Clear posts first
+        allPosts.clear()
+
+        // SwipeRefresh: Populate again
         //specify which class to query
         // Specify which class to query
         val query: ParseQuery<Post> = ParseQuery.getQuery(Post::class.java)

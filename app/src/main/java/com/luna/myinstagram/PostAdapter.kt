@@ -42,7 +42,7 @@ class PostAdapter(val context: Context, val posts: List<Post>) : RecyclerView.Ad
         fun bind(post: Post) {
             tvDescription.text = post.getDescription()
             tvUsername.text = post.getUser()?.username
-            tvTimeCreated.text = post.getCreatedAt().toString()
+            tvTimeCreated.text = post.createdAt.toString()
 
             // Populate image
             Glide.with(itemView.context)
