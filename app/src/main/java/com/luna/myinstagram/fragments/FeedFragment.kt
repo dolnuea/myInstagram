@@ -40,7 +40,7 @@ open class FeedFragment : Fragment() {
             // Make sure you call swipeContainer.setRefreshing(false)
             // once the network request has completed successfully.
             queryPosts()
-            swipeContainer.setRefreshing(false)
+            swipeContainer.isRefreshing = false
         }
 
         // Configure the refreshing colors
@@ -78,23 +78,24 @@ open class FeedFragment : Fragment() {
 
         //return posts in descending order based on posted time
         query.addDescendingOrder("createdAt")
-        query.findInBackground(object : FindCallback<Post> {
-            override fun done(posts: MutableList<Post>?, e: ParseException?) {
-                if (e != null) {
-                    Log.e(TAG, "Error fetching posts")
-                }
-                else {
-                    if (posts != null) {
-                        for (post in posts) {
-                            Log.i(TAG, "Post: " + post.getDescription() + " , username: " + post.getUser()?.username)
-                        }
-                        allPosts.addAll(posts)
-                        adapter.notifyDataSetChanged()
+
+        query.findInBackground { posts, e ->
+            if (e != null) {
+                Log.e(TAG, "Error fetching posts")
+            } else {
+                var count = 0
+                if (posts != null) {
+                    // get last 20 posts
+                    for (post in posts) {
+                        if(count < 20)
+                            allPosts.add(post)
+                        Log.i(TAG, "Post: " + post.getDescription() + " , username: " + post.getUser()?.username)
+                        count++
                     }
+                    adapter.notifyDataSetChanged()
                 }
             }
-
-        })
+        }
     }
     companion object {
         const val TAG = "FeedFragment"

@@ -22,22 +22,25 @@ class ProfileFragment: FeedFragment() {
         query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser())
         //return posts in descending order based on posted time
         query.addDescendingOrder("createdAt")
-        query.findInBackground(object : FindCallback<Post> {
-            override fun done(posts: MutableList<Post>?, e: ParseException?) {
-                if (e != null) {
-                    Log.e(TAG, "Error fetching posts")
-                }
-                else {
-                    if (posts != null) {
-                        for (post in posts) {
-                            Log.i(TAG, "Post: " + post.getDescription() + " , username: " + post.getUser()?.username)
-                        }
-                        allPosts.addAll(posts)
-                        adapter.notifyDataSetChanged()
+
+        query.findInBackground { posts, e ->
+            if (e != null) {
+                Log.e(TAG, "Error fetching posts")
+            } else {
+                var count = 0
+                if (posts != null) {
+                    for (post in posts) {
+                        if (count < 20)
+                            allPosts.add(post)
+                        Log.i(
+                            TAG,
+                            "Post: " + post.getDescription() + " , username: " + post.getUser()?.username
+                        )
+                        count++
                     }
+                    adapter.notifyDataSetChanged()
                 }
             }
-
-        })
+        }
     }
 }
