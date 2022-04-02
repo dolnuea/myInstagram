@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -19,6 +21,7 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.luna.myinstagram.fragments.ComposeFragment
 import com.luna.myinstagram.fragments.FeedFragment
+import com.luna.myinstagram.fragments.ProfileFragment
 import com.parse.*
 import java.io.File
 
@@ -27,14 +30,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        findViewById<Button>(R.id.logoutButton).setOnClickListener {
-            ParseUser.logOut()
-            val currentUser = ParseUser.getCurrentUser() // this will now be null
-            val intent = Intent(this@MainActivity,  LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
 
         val fragmentManager: FragmentManager = supportFragmentManager
 
@@ -49,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Home", LENGTH_SHORT).show()
                 }
                 R.id.action_profile -> {
-                    //todo navigate to profile screen
+                    fragmentToShow = ProfileFragment()
                     Toast.makeText(this, "Profile", LENGTH_SHORT).show()
                 }
                 R.id.action_compose -> {
@@ -66,6 +61,24 @@ class MainActivity : AppCompatActivity() {
 
         // Set default selection
         findViewById<BottomNavigationView>(R.id.bottom_navigation).selectedItemId = R.id.action_home
+    }
+
+    // action toolbar stuff
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.logout) {
+            ParseUser.logOut()
+            Toast.makeText(this, "Successfully logged out", LENGTH_SHORT).show()
+            val intent = Intent(this@MainActivity,  LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        return super.onOptionsItemSelected(item)
     }
     companion object {
         const val TAG = "MainActivity"
