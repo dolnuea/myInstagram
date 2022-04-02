@@ -35,16 +35,7 @@ class Post : ParseObject() {
         put(KEY_USER, user)
     }
 
-    fun getTimeCreated(): Date? {
-        return getDate(KEY_TIME)
-    }
-
-    fun setTimeCreated(timeCreated: Date) {
-        put(KEY_TIME, timeCreated)
-    }
-
     companion object {
-        const val KEY_TIME = "createdAt"
         const val KEY_DESCRIPTION = "description"
         const val KEY_IMAGE = "image"
         const val KEY_USER = "user"
